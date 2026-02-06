@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>My Love ❤️</title>
+
+<style>
+
+body{
+margin:0;
+font-family:'Segoe UI',sans-serif;
+background:linear-gradient(135deg,#ff9a9e,#fad0c4,#ffc3a0);
+overflow:hidden;
+color:white;
+cursor:none;
+}
+
+/* HEART CURSOR */
+
+.cursor{
+position:fixed;
+font-size:24px;
+pointer-events:none;
+z-index:9999;
+transform:translate(-50%,-50%);
+transition:transform 0.05s linear;
+}
+
+/* main card */
+
+.box{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:rgba(255,255,255,0.15);
+backdrop-filter:blur(20px);
+padding:40px;
+border-radius:25px;
+text-align:center;
+transition:1s;
+}
+
+h1{color:#ff2e88;}
+
+.btn{
+padding:15px 30px;
+border:none;
+border-radius:30px;
+font-size:18px;
+margin:20px;
+cursor:pointer;
+transition:0.3s;
+}
+
+#yes{background:#ff2e88;color:white;}
+#no{background:#ff8fb1;color:white;position:absolute;}
+
+.heart{
+position:fixed;
+animation:float 6s linear infinite;
+}
+
+@keyframes float{
+from{transform:translateY(100vh);}
+to{transform:translateY(-10vh);}
+}
+
+/* love page */
+
+#lovePage{
+display:none;
+text-align:center;
+padding-top:60px;
+animation:fade 1.5s ease;
+}
+
+@keyframes fade{
+from{opacity:0;transform:scale(0.8);}
+to{opacity:1;transform:scale(1);}
+}
+
+/* secret page */
+
+#secretPage{
+display:none;
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:linear-gradient(135deg,#ff758c,#ff7eb3);
+padding:80px;
+overflow:auto;
+animation:fade 1.5s ease;
+}
+
+.secretText{
+max-width:800px;
+margin:auto;
+font-size:22px;
+line-height:1.7;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="cursor" id="cursor">❤️</div>
+
+<div class="box" id="mainBox">
+
+<h1>my dear babiee gurl diviiieeee ❤️</h1>
+
+<p id="intro"></p>
+
+<h2>Will you be my Valentine? 💖</h2>
+
+<button id="yes" class="btn">YES 😍</button>
+<button id="no" class="btn">NO 😢</button>
+
+</div>
+
+<div id="lovePage">
+
+<h1>I LOVE YOU ❤️</h1>
+
+<p id="loveText"></p>
+
+<h2>loved you more than 1200 days many more to go 💕</h2>
+
+<button class="btn" id="openSecret">Open Secret Message 💌</button>
+
+</div>
+
+<div id="secretPage">
+
+<h1>Secret Message ❤️</h1>
+
+<div class="secretText" id="secretText"></div>
+
+</div>
+
+<script>
+
+/* HEART CURSOR */
+
+const cursor=document.getElementById("cursor");
+
+document.addEventListener("mousemove",(e)=>{
+cursor.style.left=e.clientX+"px";
+cursor.style.top=e.clientY+"px";
+
+/* heart trail */
+let trail=document.createElement("div");
+trail.innerHTML="❤️";
+trail.style.position="fixed";
+trail.style.left=e.clientX+"px";
+trail.style.top=e.clientY+"px";
+trail.style.pointerEvents="none";
+trail.style.opacity="0.6";
+trail.style.transition="1s";
+document.body.appendChild(trail);
+
+setTimeout(()=>{ trail.style.opacity="0"; },50);
+setTimeout(()=>{ trail.remove(); },1000);
+
+});
+
+/* floating hearts */
+
+setInterval(()=>{
+let heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="❤️";
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=(10+Math.random()*30)+"px";
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),6000);
+},250);
+
+/* NO escape smarter */
+
+const noBtn=document.getElementById("no");
+
+noBtn.addEventListener("mouseover",()=>{
+noBtn.style.left=Math.random()*80+"vw";
+noBtn.style.top=Math.random()*80+"vh";
+});
+
+/* YES magnetic effect */
+
+const yesBtn=document.getElementById("yes");
+
+document.addEventListener("mousemove",(e)=>{
+let rect=yesBtn.getBoundingClientRect();
+let dx=e.clientX-(rect.left+rect.width/2);
+let dy=e.clientY-(rect.top+rect.height/2);
+yesBtn.style.transform=`translate(${dx*0.05}px,${dy*0.05}px)`;
+});
+
+/* typing intro */
+
+const introText="From strangers to soulmates… every moment with you feels magical ❤️";
+let i=0;
+
+function typeIntro(){
+if(i<introText.length){
+document.getElementById("intro").innerHTML+=introText.charAt(i);
+i++;
+setTimeout(typeIntro,40);
+}
+}
+typeIntro();
+
+/* YES click transition */
+
+yesBtn.onclick=function(){
+
+document.getElementById("mainBox").style.transform="translate(-50%,-50%) scale(0)";
+setTimeout(()=>{
+document.getElementById("mainBox").style.display="none";
+document.getElementById("lovePage").style.display="block";
+typeLove();
+},600);
+
+};
+
+/* love typing */
+
+function typeLove(){
+
+const msg="You are my peace, my happiness, and the most beautiful part of my life.";
+let j=0;
+
+function typing(){
+if(j<msg.length){
+document.getElementById("loveText").innerHTML+=msg.charAt(j);
+j++;
+setTimeout(typing,40);
+}
+}
+typing();
+}
+
+/* SECRET PAGE */
+
+document.getElementById("openSecret").onclick=function(){
+
+document.getElementById("lovePage").style.display="none";
+document.getElementById("secretPage").style.display="block";
+
+typeSecret();
+
+};
+
+function typeSecret(){
+
+const text=`If you are reading this… it means you found the part of my heart I kept hidden just for you.
+
+Before you came into my life, love was just a word I heard in songs and movies. But you turned it into something real something I feel in every smile, every laugh, every moment we share.
+
+You are not just my girlfriend… you are my peace, my chaos, my comfort, and my favorite person.
+
+1200+ days with you still feel too small compared to forever that I want with you.
+
+Even on days when I don’t say it enough I choose you. Again and again. Every single time.
+
+And if someday you ever doubt how much you mean to me… come back here and remember:
+
+You are loved more than you know, more than words can explain, and more than yesterday — always.
+
+❤️`;
+
+let k=0;
+const div=document.getElementById("secretText");
+
+function typing(){
+if(k<text.length){
+div.innerHTML+=text.charAt(k);
+k++;
+setTimeout(typing,25);
+}
+}
+
+typing();
+
+}
+
+</script>
+
+</body>
+</html>
